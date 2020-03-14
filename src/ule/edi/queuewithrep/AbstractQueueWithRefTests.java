@@ -80,6 +80,106 @@ public abstract class AbstractQueueWithRefTests {
 	
 	// TODO AÑADIR MAS TESTS
 	
+	@Test(expected = NullPointerException.class)
+	
+	public void testAddNullOneTime() {
+		S1.add(null);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	
+	public void testAddNullManyTimes() {
+		S1.add(null,5);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	
+	public void testAddNullNegativeTimes() {
+		S1.add("ABC",-5);
+	}
+	
+	@Test
+	
+	public void testAddOneTimeAlreadyAdded() {
+		S1.add("ABC");
+		S1.add("ABC");
+		Assert.assertEquals(S1.count("ABC"),2);
+	}
+	
+
+	@Test
+	
+	public void testAddTwoEqualsAndOtherNot() {
+		
+		S1.add("DLr");
+		S1.add("ABC");
+		S1.add("ABC");
+				
+		Assert.assertEquals(S1.size(),3);
+	}
+	
+	@Test
+	
+	public void testAddTwoEqualsAndOtherNotSeveralTimes() {
+		
+		S1.add("DLr",1);
+		S1.add("ABC",1);
+		S1.add("ABC",1);
+				
+		Assert.assertEquals(S1.size(),3);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testRemoveNull() {
+		S1.remove(null, 1);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveNegativeTimes() {
+		S1.remove("ABC",-9);
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void testRemoveNotContained() {
+		S1.remove("ABC",1);
+	}
+	
+	@Test
+	public void testRemoveContained() {
+		S1.add("ABC",3);
+		S1.remove("ABC",1);
+		Assert.assertEquals(S1.count("ABC"), 2);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveContainedSameTimes() {
+		S1.add("ABC",3);
+		S1.remove("ABC",3);
+	}
+	
+	@Test
+	public void testRemoveContainedTwoSameOtherNot() {
+		S1.add("JLK");
+		
+		S1.add("ABC",1);
+		S1.add("ABC");
+		S1.remove("ABC",1);
+		Assert.assertEquals(S1.count("ABC"), 3);
+	}
+	
+
+	
+	
+	
+	@Test
+	
+	public void testContainsTrue() {
+		S1.add("ABC");
+		Assert.assertTrue(S1.contains("ABC"));
+	}
+	
+	
+	
 	
 	
 

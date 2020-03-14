@@ -69,8 +69,8 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 	@SuppressWarnings("unchecked")
 	public ArrayQueueWithRepImpl() {
-		data =   new ElemQueueWithRep[capacityDefault];
-		count=0;
+		this.data = new ElemQueueWithRep[capacityDefault];
+		this.count=0;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -117,7 +117,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			}else {
 				for(int i=0;i<count;i++) {
 					if(data[i].elem.equals(element)) {
-						data[i].num = times;
+						data[i].num += times;
 					}
 				}
 
@@ -162,6 +162,8 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		
 		if(element == null) {
 			throw new NullPointerException();
+		}else if(times == 0) {
+			return;
 		}else if(times < 0) {
 			throw new IllegalArgumentException();
 		}else if(!(contains(element))) {
@@ -169,7 +171,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		}else {
 			for(int i=0;i<count;i++) {
 				if(times >= data[i].num) {
-					throw new NoSuchElementException();					
+					throw new IllegalArgumentException();					
 				}else if(data[i].elem.equals(element)){
 					data[i].num -= times;
 				}
@@ -217,8 +219,10 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		if(element == null) {
 			throw new NullPointerException();
+		}else if(count == 0){
+			return false;
 		}else {
-			for(int i=0;i<this.data.length;i++) {
+			for(int i=0;i<this.count;i++) {
 				if(this.data[i].elem.equals(element)) {
 					return true;
 				}
@@ -271,6 +275,10 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	@Override
 	public Iterator<T> iterator() {
 		// TODO 
+		
+		return new ArrayQueueWithRepIterator<T>(data,count);
+		
+		
 	}
 
 	@Override
@@ -281,6 +289,14 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		buffer.append("(");
 
 		// TODO Ir añadiendo en buffer las cadenas para la representación de la cola. Ejemplo: (A, A, A, B )
+		
+		for(int i=0;i<count;i++) {
+			for(int j=0;j<data[i].num;j++) {
+				buffer.append(data[i].elem);
+				buffer.append(" ");
+			}
+			
+		}
 
 		buffer.append(")");
 
