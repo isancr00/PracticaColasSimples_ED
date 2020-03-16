@@ -176,8 +176,6 @@ public abstract class AbstractQueueWithRefTests {
 	
 	@Test(expected = EmptyCollectionException.class )
 	public void testRemoveEmpty() throws EmptyCollectionException {
-		S1.add("ABC");
-		S1.remove();
 		S1.remove();
 	}
 	
