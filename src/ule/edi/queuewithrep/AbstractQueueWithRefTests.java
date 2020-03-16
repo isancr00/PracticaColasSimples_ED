@@ -160,16 +160,52 @@ public abstract class AbstractQueueWithRefTests {
 	@Test
 	public void testRemoveContainedTwoSameOtherNot() {
 		S1.add("JLK");
-		
+		S1.add("ABC",2);
 		S1.add("ABC",1);
-		S1.add("ABC");
-		S1.remove("ABC",1);
-		Assert.assertEquals(S1.count("ABC"), 3);
+		assertEquals(S1.count("ABC"), 3);
+		S1.remove("ABC", 1);
+		assertEquals(S1.count("ABC"), 2);
 	}
 	
+	
+	@Test
+	public void testRemoveFullCollection() throws EmptyCollectionException {
+		S1.add("ABC");
+		assertEquals(S1.remove(),1);
+	}
+	
+	@Test(expected = EmptyCollectionException.class )
+	public void testRemoveEmpty() throws EmptyCollectionException {
+		S1.add("ABC");
+		S1.remove();
+		S1.remove();
+	}
+	
+	@Test
+	public void testClear() {
+		S1.add("ABC",3);
+		S1.clear();
+		
+		assertEquals(S1.size(), 0);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testContainsNull() {
+		S1.contains(null);
+	}
+	
+	@Test
+	public void testCountNotIncluded() {
+		assertEquals(S1.count("ABC"), 0);
+	}
 
 	
-	
+	@Test
+	public void testCountIncluded() {
+		S1.add("BCA");
+		S1.add("GJC");
+		assertEquals(S1.count("GJC"), 1);
+	}	
 	
 	@Test
 	
@@ -178,6 +214,53 @@ public abstract class AbstractQueueWithRefTests {
 		Assert.assertTrue(S1.contains("ABC"));
 	}
 	
+	@Test
+	
+	public void testCountLastElement() {
+		S1.add("ABv",11);
+		S1.add("Jkl",7);
+		
+		assertEquals(S1.count("ABv"),11);
+		assertEquals(S1.count("Jkl"),7);
+		assertEquals(S1.count("lsd"),0);
+
+	}
+	
+	@Test 
+	public void testRemoveNothing(){
+		assertEquals(S1.count("ABC"),0);
+	}
+	
+	
+	@Test
+	public void testGetIterator() {
+		assertFalse(S1.iterator().hasNext());
+	}
+	
+	@Test
+	public void testHasNext() {
+		S1.add("22");
+		S1.add("22");
+		assertTrue(S1.iterator().hasNext());
+	}
+	
+	@Test(expected = NoSuchElementException.class)
+	public void testNextNotHasNext() {
+		S1.iterator().next();
+	}
+	
+	@Test
+	public void testNextWithHasNext() {
+		S1.add("22");
+		S1.add("22");
+		assertNotNull(S1.iterator().next());
+	}
+	
+	@Test
+	public void testCountNotOnCollection() {
+		S1.add("ABC");
+		assertEquals(S1.count("lpo"), 0);
+	}
 	
 	
 	

@@ -45,7 +45,6 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		@Override
 		public boolean hasNext() {
 			return (current < contador);			
-
 		}
 
 		@Override
@@ -87,7 +86,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		// todo
 
-		for(int index=0;index<this.data.length;index++) {
+		for(int index=0;index<this.count;index++) {
 			nuevo[index] = data[index];
 		}
 
@@ -170,12 +169,14 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			throw new NoSuchElementException();
 		}else {
 			for(int i=0;i<count;i++) {
-				if(times >= data[i].num) {
-					throw new IllegalArgumentException();					
-				}else if(data[i].elem.equals(element)){
-					data[i].num -= times;
+				if(element.equals(data[i].elem)) {
+					if(times == data[i].num) {
+						throw new IllegalArgumentException();
+					}else {
+						data[i].num -= times;
+					}
 				}
-			}
+			}	
 			
 		}
 
@@ -186,13 +187,16 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public int remove() throws EmptyCollectionException {
 		//todo
 		
-		int numero = data[count].num;
+		int numero=0;
+		if(data[0]!=null) {
+			numero = data[0].num;
+		}
 		
 		if(isEmpty()) {
 			throw new EmptyCollectionException("ArrayQueueWithRep");
 		}else {
-			data[count].num = 0;
-			data[count] = null;
+			data[0].num = 0;
+			data[0] = null;
 			
 			count--;
 		}
@@ -206,8 +210,10 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public void clear() {
 		// TODO 
 		
-		for(int i=0;i<this.data.length;i++) {
-			this.data[i] = null;
+		for(int i=0;i<this.count;i++) {
+			this.data[i].elem = null;
+			this.data[i].num = 0;
+			count--;
 		}
 
 	}
@@ -261,7 +267,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		// TODO 
 		
 		if(contains(element)) {
-			for(int i=0;i<count;i++) {
+			for(int i=0;i<count;i++){
 				if(data[i].elem.equals(element)) {
 					return data[i].num;
 				}
