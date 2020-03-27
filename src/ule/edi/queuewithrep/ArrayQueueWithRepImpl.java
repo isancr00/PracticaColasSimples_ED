@@ -33,11 +33,11 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		private int contador;
 		private int current;
-		private T[] items;
+		private ElemQueueWithRep<T>[] items;
 
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count){
 			this.contador = count;
-			this.items = (T[]) cola;
+			this.items = cola;
 			this.current = 0;
 
 		}
@@ -54,7 +54,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			}
 
 			current++;
-			return items[current-1];
+			return items[current-1].elem;
 
 		}
 
@@ -282,7 +282,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public Iterator<T> iterator() {
 		// TODO 
 		
-		return new ArrayQueueWithRepIterator<T>(data,count);
+		return new ArrayQueueWithRepIterator<T>(data,(int)size());
 		
 		
 	}
