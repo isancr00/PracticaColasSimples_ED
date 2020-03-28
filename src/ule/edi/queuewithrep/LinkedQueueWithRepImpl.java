@@ -33,9 +33,11 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 
 		private QueueWithRepNode<T> current;
+		private int times;
 
 		public LinkedQueueWithRepIterator(QueueWithRepNode<T> nodo) {
 			this.current = nodo;
+			this.times = 0;
 		}
 
 		@Override
@@ -49,10 +51,17 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
+			times++;
 
 			T result = current.elem;
+						
+			if(this.times == current.num) {
+				times = 0;
+				current = current.next;
+				return result;
+			}
 
-			current = current.next;
+
 
 			return result;
 
@@ -273,7 +282,6 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 	@Override
 	public Iterator<T> iterator() {
 		// TODO 
-
 		return new LinkedQueueWithRepIterator<T>(front);
 	}
 

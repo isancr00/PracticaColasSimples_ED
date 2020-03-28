@@ -1,6 +1,10 @@
 package ule.edi.queuewithrep;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class ArrayQueueWithRepRefTests extends AbstractQueueWithRefTests {
 

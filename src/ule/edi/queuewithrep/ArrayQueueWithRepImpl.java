@@ -33,18 +33,20 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		private int contador;
 		private int current;
+		private int times;
 		private ElemQueueWithRep<T>[] items;
 
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count){
 			this.contador = count;
 			this.items = cola;
 			this.current = 0;
+			this.times =0;
 
 		}
 
 		@Override
 		public boolean hasNext() {
-			return (current < contador);			
+			return (current < (int)size());			
 		}
 
 		@Override
@@ -53,8 +55,14 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				throw new NoSuchElementException();
 			}
 
-			current++;
-			return items[current-1].elem;
+			times++;
+			
+			if(this.times == items[current].num) {
+				current++;
+				times = 0;
+				return items[current-1].elem;
+			}
+			return items[current].elem;
 
 		}
 

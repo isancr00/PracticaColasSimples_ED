@@ -251,17 +251,14 @@ public abstract class AbstractQueueWithRefTests {
 	public void testNextWithHasNext() {
 		S1.add("22");
 		S1.add("22");
-		assertNotNull(S1.iterator().next());
+		assertEquals(S1.iterator().next().toString(),"22");
+		assertEquals(S1.iterator().next().toString(), "22");
 	}
 	
 	@Test
 	public void testCountNotOnCollection() {
 		S1.add("ABC");
 		assertEquals(S1.count("lpo"), 0);
-	}
-	
-	
-	
-	
+	}	
 
 }
